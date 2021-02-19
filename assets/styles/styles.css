@@ -11,3 +11,12 @@
   stroke-linejoin: round;
   fill: none;
 }
+
+#percentage-container svg circle {
+  stroke-width: 4;
+  stroke: #1083D0;
+}
+
+#timer-display {
+
+}
