@@ -4,9 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tailwindcss": "npx tailwindcss-cli@latest build assets/styles/tailwind.config.css -o assets/styles/tailwind.css"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^10.1.0",
+    "tailwindcss": "^2.0.1"
+  },
+  "devDependencies": {
+    "git-commit-msg-linter": "^3.0.0",
+    "standard": "^16.0.3"
+  }
 }
