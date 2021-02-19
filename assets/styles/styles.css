@@ -1,0 +1,13 @@
+*, html, body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.feather {
+  width: 28px;
+  height: 28px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
