@@ -1,4 +1,11 @@
 function WorkApp () {
+  const DOM = {
+    timerDisplay: document.querySelector('#timer-display'),
+    playButton: document.querySelector('#play-button'),
+    pauseButton: document.querySelector('#pause-button'),
+    stopButton: document.querySelector('#stop-button')
+  }
+
   const currentSettings = {
     time: {
       minutes: 25,
@@ -16,9 +23,7 @@ function WorkApp () {
   }
 
   function updateButtons () {
-    const playButton = document.querySelector('#play-button')
-    const pauseButton = document.querySelector('#pause-button')
-    const stopButton = document.querySelector('#stop-button')
+    const { playButton, pauseButton, stopButton } = DOM
 
     const actionsByPlayingStatus = {
       true () {
@@ -59,7 +64,7 @@ function WorkApp () {
   }
 
   function updateDisplayTimer () {
-    const timerDisplay = document.querySelector('#timer-display')
+    const { timerDisplay } = DOM
     const { minutes, seconds } = currentSettings.time
 
     timerDisplay.innerHTML = `${formatTime(minutes)}:${formatTime(seconds)}`
@@ -74,33 +79,28 @@ function WorkApp () {
   function updateCirclePercentage () {
     const percentageContainer = document.querySelector('#percentage-container')
     const circlePercentage = percentageContainer.querySelector('svg circle')
-
     const fullCircleLength = circlePercentage.getAttribute('stroke-dasharray')
 
     const percentage = Number(fullCircleLength) * timeToSeconds(currentSettings.time) / timeToSeconds({ minutes: 25, seconds: 0 })
-
     circlePercentage.setAttribute('stroke-dashoffset', percentage)
   }
 
   function handlePlayTimer () {
-    const playButton = document.querySelector('#play-button')
-    playButton.addEventListener('click', (event) => {
+    DOM.playButton.addEventListener('click', (event) => {
       currentSettings.isPlaying = true
       updateButtons()
     })
   }
 
   function handlePauseTimer () {
-    const pauseButton = document.querySelector('#pause-button')
-    pauseButton.addEventListener('click', () => {
+    DOM.pauseButton.addEventListener('click', () => {
       currentSettings.isPlaying = false
       updateButtons()
     })
   }
 
   function handleStopTimer () {
-    const stopButton = document.querySelector('#stop-button')
-    stopButton.addEventListener('click', () => {
+    DOM.stopButton.addEventListener('click', () => {
       resetTimer()
       updateButtons()
     })
