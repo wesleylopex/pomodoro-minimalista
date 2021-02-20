@@ -39,11 +39,11 @@
 }
 
 .task.task--checked .task__icon {
-  @apply block;
+  @apply opacity-100;
 }
 
 .task__icon {
-  @apply text-light hidden transition duration-300;
+  @apply text-light opacity-0 transition duration-300;
 }
 
 .task__input {

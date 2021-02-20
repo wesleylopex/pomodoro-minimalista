@@ -633,11 +633,11 @@ video {
 }
 
 .task.task--checked .task__icon {
-  display: block;
+  opacity: 1;
 }
 
 .task__icon {
-  display: none;
+  opacity: 0;
   --tw-text-opacity: 1;
   color: rgba(245, 245, 245, var(--tw-text-opacity));
   transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
