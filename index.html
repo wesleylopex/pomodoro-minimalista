@@ -186,9 +186,26 @@
     </div>
   </footer>
 
+  <div id="loader" class="w-screen h-screen fixed top-0 left-0 bg-dark z-50 flex justify-center items-center transition-all duration-500">
+    <figure>
+      <img class="rotating w-24" src="assets/images/favicon-pomodoro-minimalista-branco.png" alt="Pomodoro Minimalista" title="Pomodoro Minimalista">
+    </figure>
+  </div>  
+
   <script src="assets/scripts/feather-icons/feather.min.js"></script>
   <script src="assets/scripts/feather-icons/init.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="assets/scripts/App.js"></script>
+
+  <script>
+    function hideLoader () {
+      const loader = document.querySelector('#loader')
+      loader.style.display = 'none'
+    }
+
+    window.addEventListener('load', () => {
+      hideLoader()
+    })
+  </script>
 </body>
 </html>
