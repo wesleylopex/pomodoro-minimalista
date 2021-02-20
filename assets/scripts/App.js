@@ -38,6 +38,7 @@ const vue = new Vue({
   },
   created () {
     this.runIntervals()
+    this.askForNotification()
     this.tasks = JSON.parse(localStorage.getItem('tasks')) || []
   },
   watch: {
@@ -134,6 +135,15 @@ const vue = new Vue({
     },
     timeToSeconds (time) {
       return (Number(time.minutes) * 60) + Number(time.seconds)
+    },
+    askForNotification () {
+      if (!('Notification' in window)) {
+        return false
+      }
+
+      if (Notification.permission !== 'denied') {
+        Notification.requestPermission()
+      }
     },
     notify () {
       if (!('Notification' in window)) {
