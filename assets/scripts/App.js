@@ -68,12 +68,13 @@ const vue = new Vue({
       this.tasks.push({ title: '', isDone: false })
       this.setFocusOnLastTask()
     },
-    deleteTaskIfEmpty (index) {
+    deleteTaskIfEmpty (index, event) {
       const task = this.tasks[index]
 
       if (!task) return
 
       if (!task.title) {
+        if (event) event.preventDefault()
         this.deleteTask(index)
         this.setFocusOnLastTask()
       }
