@@ -17,45 +17,67 @@
 
 </head>
 <body class="bg-dark text-light">
-  <main id="app" class="min-h-screen flex flex-col justify-center items-center container mx-auto">
-    <div class="wrapper">
-      <div class="flex flex-col items-center justify-center">
-        <div id="tabs-container" class="flex justify-center">
-          <div class="flex justify-center items-center bg-primary rounded-full">
-            <button
-              v-for="tab in allowedTimers"
-              @click="activeTimer=tab.slug"
-              :class="activeTimer === tab.slug ? 'active' : ''"
-              class="transition-colors duration-300 font-medium text-lg focus:outline-none p-3 px-6 rounded-full"
-            >
-              {{ tab.title }}
+  <div id="app">
+    <main class="min-h-screen flex flex-col justify-center items-center container mx-auto">
+      <div class="wrapper">
+        <div class="flex flex-col items-center justify-center">
+          <div id="tabs-container" class="flex justify-center">
+            <div class="flex justify-center items-center bg-primary rounded-full">
+              <button
+                v-for="tab in allowedTimers"
+                @click="activeTimer=tab.slug"
+                :class="activeTimer === tab.slug ? 'active' : ''"
+                class="transition-colors duration-300 font-medium text-lg focus:outline-none p-3 px-6 rounded-full"
+              >
+                {{ tab.title }}
+              </button>
+            </div>
+          </div>
+          <div id="percentage-container" class="my-10 relative w-60 h-60">
+            <svg class="w-60 h-60">
+              <circle class="w-60 h-60" :stroke-dasharray="circle.strokeDashArray" :stroke-dashoffset="strokeDashOffset" fill="none" cx="120" cy="120" r="118"></circle>
+            </svg>
+            <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+              <span id="timer-display" class="font-medium text-5xl">
+                {{ currentTime }}
+              </span>
+            </div>
+          </div>
+          <div class="flex items-center justify-center">
+            <button @click="stop" :class="timer[activeTimer].isPlaying ? 'flex' : 'hidden'" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
+              <i data-feather="square"></i>
+            </button>
+            <button @click="play" :class="timer[activeTimer].isPlaying ? 'hidden' : 'flex'" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
+              <i data-feather="play"></i>
+            </button>
+            <button @click="pause" :class="timer[activeTimer].isPlaying ? 'flex' : 'hidden'" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
+              <i data-feather="pause"></i>
             </button>
           </div>
         </div>
-        <div id="percentage-container" class="my-10 relative w-60 h-60">
-          <svg class="w-60 h-60">
-            <circle class="w-60 h-60" :stroke-dasharray="circle.strokeDashArray" :stroke-dashoffset="strokeDashOffset" fill="none" cx="120" cy="120" r="118"></circle>
-          </svg>
-          <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-            <span id="timer-display" class="font-medium text-5xl">
-              {{ currentTime }}
-            </span>
+      </div>
+    </main>
+
+    <section class="py-12 md:-py-20">
+      <div class="wrapper">
+        <div class="flex items-center justify-between">
+          <h1 class="title">Tarefas</h1>
+          <button @click="createTask" class="mx-2 bg-primary flex justify-center items-center p-1 rounded-sm focus:outline-none text-xs uppercase">
+            <i class="w-6 h-6 mr-2" data-feather="plus"></i>
+            Adicionar tarefa
+          </button>
+        </div>
+        <div class="mt-10 grid grid-cols-1 gap-5">
+          <div v-for="(task, index) in tasks" :key="index" :class="task.isDone ? 'task--checked' : ''" class="task">
+            <div class="task__checkbox" @click="task.isDone = !task.isDone">
+              <i class="task__icon" data-feather="check"></i>
+            </div>
+            <input type="text" class="ml-4 task__input" :ref="`index-${index}`" :value="task.title" @keyup.enter="createTask">
           </div>
         </div>
-        <div class="flex items-center justify-center">
-          <button @click="stop" :class="timer[activeTimer].isPlaying ? 'flex' : 'hidden'" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
-            <i data-feather="square"></i>
-          </button>
-          <button @click="play" :class="timer[activeTimer].isPlaying ? 'hidden' : 'flex'" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
-            <i data-feather="play"></i>
-          </button>
-          <button @click="pause" :class="timer[activeTimer].isPlaying ? 'flex' : 'hidden'" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
-            <i data-feather="pause"></i>
-          </button>
-        </div>
       </div>
-    </div>
-  </main>
+    </section>
+  </div>
 
   <section class="py-12 md:py-20">
     <div class="wrapper">
@@ -122,6 +144,16 @@
     const vue = new Vue({
       el: '#app',
       data: {
+        tasks: [
+          {
+            title: 'Fazer o timer do Pomodoro Design',
+            isDone: true
+          },
+          {
+            title: 'Fazer o logo do Pomodoro Design',
+            isDone: false
+          }
+        ],
         allowedTimers: [
           {
             slug: 'work',
@@ -159,6 +191,18 @@
         this.runIntervals()
       },
       methods: {
+        createTask () {
+          this.tasks.push({ title: '', isDone: false })
+          this.setFocusOnLastTask()
+        },
+        setFocusOnLastTask () {
+          const ref = this.tasks.length - 1
+
+          this.$nextTick(() => {
+            const [input] = this.$refs[`index-${ref}`]
+            input.focus()
+          })
+        },
         runIntervals () {
           for (const allowedTimer of this.allowedTimers) {
             const timer = this.timer[allowedTimer.slug]

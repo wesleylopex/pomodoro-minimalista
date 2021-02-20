@@ -18,5 +18,37 @@
   @apply leading-loose;
 }
 
+.task {
+  @apply flex items-center;
+}
+
+.task.task--checked .task__checkbox {
+  @apply bg-primary border-primary transition duration-300;
+}
+
+.task__checkbox {
+  @apply w-5 h-5 flex items-center justify-center rounded-sm border-2 border-light cursor-pointer;
+}
+
+.task .task__checkbox:hover {
+  @apply bg-gray-600;
+}
+
+.task.task--checked .task__checkbox:hover {
+  @apply bg-gray-600 border-gray-600;
+}
+
+.task.task--checked .task__icon {
+  @apply block;
+}
+
+.task__icon {
+  @apply text-light hidden transition duration-300;
+}
+
+.task__input {
+  @apply bg-transparent border-none outline-none w-full;
+}
+
 @tailwind components;
 @tailwind utilities;

@@ -591,6 +591,69 @@ video {
   line-height: 2;
 }
 
+.task {
+  display: flex;
+  align-items: center;
+}
+
+.task.task--checked .task__checkbox {
+  --tw-bg-opacity: 1;
+  background-color: rgba(16, 131, 208, var(--tw-bg-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgba(16, 131, 208, var(--tw-border-opacity));
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-duration: 300ms;
+}
+
+.task__checkbox {
+  --tw-border-opacity: 1;
+  border-color: rgba(245, 245, 245, var(--tw-border-opacity));
+  border-radius: 0.125rem;
+  border-width: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.task .task__checkbox:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(75, 85, 99, var(--tw-bg-opacity));
+}
+
+.task.task--checked .task__checkbox:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(75, 85, 99, var(--tw-bg-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgba(75, 85, 99, var(--tw-border-opacity));
+}
+
+.task.task--checked .task__icon {
+  display: block;
+}
+
+.task__icon {
+  display: none;
+  --tw-text-opacity: 1;
+  color: rgba(245, 245, 245, var(--tw-text-opacity));
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-duration: 300ms;
+}
+
+.task__input {
+  background-color: transparent;
+  border-style: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  width: 100%;
+}
+
 .container {
   width: 100%;
 }
