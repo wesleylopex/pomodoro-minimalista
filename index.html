@@ -17,32 +17,42 @@
 
 </head>
 <body class="bg-dark text-light">
-  <main class="min-h-screen flex flex-col justify-center items-center container mx-auto">
+  <main id="app" class="min-h-screen flex flex-col justify-center items-center container mx-auto">
     <div class="wrapper">
-      <div id="tabs-container" class="flex justify-center">
-        <div class="flex justify-center items-center bg-primary rounded-full">
-          <button id="work-tab" class="active transition-colors duration-300 font-medium text-lg focus:outline-none p-3 px-6 rounded-full">Trabalho</button>
-          <button id="break-tab" class="transition-colors duration-300 font-medium text-lg focus:outline-none p-3 px-6 rounded-full">Descanso</button>
+      <div class="flex flex-col items-center justify-center">
+        <div id="tabs-container" class="flex justify-center">
+          <div class="flex justify-center items-center bg-primary rounded-full">
+            <button
+              v-for="tab in allowedTimers"
+              @click="activeTimer=tab.slug"
+              :class="activeTimer === tab.slug ? 'active' : ''"
+              class="transition-colors duration-300 font-medium text-lg focus:outline-none p-3 px-6 rounded-full"
+            >
+              {{ tab.title }}
+            </button>
+          </div>
         </div>
-      </div>
-      <div id="percentage-container" class="my-10 relative w-60 h-60">
-        <svg class="w-60 h-60">
-          <circle class="w-60 h-60" stroke-dasharray="760" stroke-dashoffset="760" fill="none" cx="120" cy="120" r="118"></circle>
-        </svg>
-        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-          <span id="timer-display" class="font-medium text-5xl">00:00</span>
+        <div id="percentage-container" class="my-10 relative w-60 h-60">
+          <svg class="w-60 h-60">
+            <circle class="w-60 h-60" :stroke-dasharray="circle.strokeDashArray" :stroke-dashoffset="strokeDashOffset" fill="none" cx="120" cy="120" r="118"></circle>
+          </svg>
+          <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+            <span id="timer-display" class="font-medium text-5xl">
+              {{ currentTime }}
+            </span>
+          </div>
         </div>
-      </div>
-      <div class="flex items-center justify-center">
-        <button id="stop-button" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
-          <i data-feather="square"></i>
-        </button>
-        <button id="play-button" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
-          <i data-feather="play"></i>
-        </button>
-        <button id="pause-button" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
-          <i data-feather="pause"></i>
-        </button>
+        <div class="flex items-center justify-center">
+          <button @click="stop" :class="timer[activeTimer].isPlaying ? 'flex' : 'hidden'" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
+            <i data-feather="square"></i>
+          </button>
+          <button @click="play" :class="timer[activeTimer].isPlaying ? 'hidden' : 'flex'" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
+            <i data-feather="play"></i>
+          </button>
+          <button @click="pause" :class="timer[activeTimer].isPlaying ? 'flex' : 'hidden'" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
+            <i data-feather="pause"></i>
+          </button>
+        </div>
       </div>
     </div>
   </main>
@@ -106,6 +116,113 @@
 
   <script src="assets/scripts/feather-icons/feather.min.js"></script>
   <script src="assets/scripts/feather-icons/init.js"></script>
-  <script src="assets/scripts/timer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+    const vue = new Vue({
+      el: '#app',
+      data: {
+        allowedTimers: [
+          {
+            slug: 'work',
+            title: 'Trabalho',
+            minutes: 25,
+            seconds: 0
+          },
+          {
+            slug: 'break',
+            title: 'Descanso',
+            minutes: 5,
+            seconds: 0
+          }
+        ],
+        activeTimer: 'work',
+        timer: {
+          work: {
+            isPlaying: false,
+            minutes: 25,
+            seconds: 0,
+            interval: (callback) => setInterval(callback, 1000)
+          },
+          break: {
+            isPlaying: false,
+            minutes: 5,
+            seconds: 0,
+            interval: (callback) => setInterval(callback, 1000)
+          }
+        },
+        circle: {
+          strokeDashArray: 760
+        }
+      },
+      created () {
+        this.runIntervals()
+      },
+      methods: {
+        runIntervals () {
+          for (const allowedTimer of this.allowedTimers) {
+            const timer = this.timer[allowedTimer.slug]
+            
+            timer.interval(() => {
+              if (!timer.isPlaying) return false
+
+              timer.seconds -= 1
+
+              if (timer.seconds < 0) {
+                timer.seconds = 59
+                timer.minutes -= 1
+              }
+            })
+          }
+        },
+        play () {
+          this.timer[this.activeTimer].isPlaying = true
+        },
+        pause () {
+          this.timer[this.activeTimer].isPlaying = false
+        },
+        stop () {
+          clearInterval(this.timer[this.activeTimer].interval)
+
+          const timer = this.allowedTimers.find(t => t.slug === this.activeTimer)
+
+          this.timer[this.activeTimer].isPlaying = false,
+          this.timer[this.activeTimer].minutes = timer.minutes
+          this.timer[this.activeTimer].seconds = timer.seconds
+        },
+        timeToSeconds (time) {
+          return (Number(time.minutes) * 60) + Number(time.seconds)
+        }
+      },
+      computed: {
+        currentTime () {
+          const timerSeconds = this.timer[this.activeTimer].seconds
+          const timerMinutes = this.timer[this.activeTimer].minutes
+
+          const seconds = timerSeconds >= 10 ? timerSeconds : `0${timerSeconds}`
+          const minutes = timerMinutes >= 10 ? timerMinutes : `0${timerMinutes}`
+
+          return `${minutes}:${seconds}`
+        },
+        strokeDashOffset () {
+          const currentTime = {
+            minutes: this.timer[this.activeTimer].minutes,
+            seconds: this.timer[this.activeTimer].seconds
+          }
+
+          const currentTimer = this.allowedTimers.find(t => t.slug === this.activeTimer)
+
+          const defaultTime = {
+            minutes: currentTimer.minutes,
+            seconds: currentTimer.seconds
+          }
+
+          const percentage = Number(this.circle.strokeDashArray) * this.timeToSeconds(currentTime) / this.timeToSeconds(defaultTime)
+
+          return percentage
+        },
+      }
+    })
+  </script>
 </body>
 </html>
