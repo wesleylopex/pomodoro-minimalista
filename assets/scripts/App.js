@@ -33,7 +33,8 @@ const vue = new Vue({
     },
     circle: {
       strokeDashArray: 760
-    }
+    },
+    defaultPageTitle: 'Pomodoro Timer Online - Técnica / Método Pomodoro - Pomodoro Minimalista'
   },
   created () {
     this.runIntervals()
@@ -47,9 +48,22 @@ const vue = new Vue({
           localStorage.setItem('tasks', JSON.stringify(tasks))
         })
       }
+    },
+    currentTime (currentTime) {
+      this.setPageTitle(currentTime)
     }
   },
   methods: {
+    setPageTitle (currentTime) {
+      const timer = this.timer[this.activeTimer]
+      const message = this.activeTimer === 'work' ? 'Hora de trabalhar' : 'Tempo para descanso'
+
+      if (timer.isPlaying) {
+        document.title = `${currentTime} - ${message}`
+      } else {
+        document.title = this.defaultPageTitle
+      }
+    },
     createTask () {
       this.tasks.push({ title: '', isDone: false })
       this.setFocusOnLastTask()
