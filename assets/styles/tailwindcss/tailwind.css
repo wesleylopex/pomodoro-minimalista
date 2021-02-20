@@ -552,9 +552,8 @@ video {
 }
 
 #tabs-container button.active {
-  --tw-border-opacity: 1;
-  border-color: rgba(16, 131, 208, var(--tw-border-opacity));
-  border-bottom-width: 1px;
+  --tw-bg-opacity: 1;
+  background-color: rgba(245, 245, 245, var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgba(16, 131, 208, var(--tw-text-opacity));
 }

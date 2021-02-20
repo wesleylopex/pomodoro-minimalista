@@ -1,7 +1,7 @@
 @tailwind base;
 
 #tabs-container button.active {
-  @apply border-b border-primary text-primary;
+  @apply bg-light text-primary;
 }
 
 @tailwind components;
