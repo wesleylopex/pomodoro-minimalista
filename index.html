@@ -71,7 +71,7 @@
             <div class="task__checkbox" @click="task.isDone = !task.isDone">
               <i class="task__icon" data-feather="check"></i>
             </div>
-            <input type="text" class="ml-4 task__input" :ref="`index-${index}`" v-model="task.title" @keyup.enter="createTask" @keydown.delete="deleteTaskIfEmpty(index)">
+            <input type="text" class="ml-4 task__input" :ref="`index-${index}`" v-model.trim="task.title" @keyup.enter="createTask" @keydown.delete="deleteTaskIfEmpty(index)">
           </div>
         </div>
       </div>
@@ -183,6 +183,17 @@
       },
       created () {
         this.runIntervals()
+        this.tasks = JSON.parse(localStorage.getItem('tasks'))
+      },
+      watch: {
+        tasks: {
+          deep: true,
+          handler (tasks) {
+            this.$nextTick(() => {
+              localStorage.setItem('tasks', JSON.stringify(tasks));
+            })
+          }
+        }
       },
       methods: {
         createTask () {
