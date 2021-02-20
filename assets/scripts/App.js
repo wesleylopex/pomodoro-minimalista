@@ -38,7 +38,7 @@ const vue = new Vue({
   },
   created () {
     this.runIntervals()
-    this.tasks = JSON.parse(localStorage.getItem('tasks'))
+    this.tasks = JSON.parse(localStorage.getItem('tasks')) || []
   },
   watch: {
     tasks: {
