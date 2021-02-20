@@ -1,27 +1,60 @@
-function WorkApp () {
+function TimerApp () {
   const DOM = {
     timerDisplay: document.querySelector('#timer-display'),
     playButton: document.querySelector('#play-button'),
     pauseButton: document.querySelector('#pause-button'),
-    stopButton: document.querySelector('#stop-button')
+    stopButton: document.querySelector('#stop-button'),
+    tabs: {
+      work: document.querySelector('#work-tab'),
+      break: document.querySelector('#break-tab')
+    }
   }
 
   const defaultSettings = {
-    time: {
-      minutes: 25,
-      seconds: 0
+    work: {
+      time: {
+        minutes: 25,
+        seconds: 0
+      },
+      isPlaying: false
     },
-    isPlaying: false
+    break: {
+      time: {
+        minutes: 5,
+        seconds: 0
+      },
+      isPlaying: false
+    }
   }
 
-  const currentSettings = { ...defaultSettings }
+  let activeTab = 'work'
+
+  let currentSettings = { ...defaultSettings[activeTab] }
+
+  const interval = () => setInterval(() => {
+    if (currentSettings.time.minutes <= 0 && currentSettings.time.seconds <= 0) {
+      resetTimer()
+    }
+
+    if (!currentSettings.isPlaying) return false
+
+    currentSettings.time.seconds -= 1
+
+    if (currentSettings.time.seconds < 0) {
+      currentSettings.time.seconds = 59
+      currentSettings.time.minutes -= 1
+    }
+
+    updateDisplayTimer()
+  }, 1000)
 
   function resetTimer () {
-    currentSettings.time = { ...defaultSettings.time }
-    currentSettings.isPlaying = defaultSettings.isPlaying
+    currentSettings.time = { ...defaultSettings[activeTab].time }
+    currentSettings.isPlaying = defaultSettings[activeTab].isPlaying
 
     updateButtons()
     updateDisplayTimer()
+    clearInterval(interval)
   }
 
   function updateButtons () {
@@ -51,22 +84,7 @@ function WorkApp () {
   }
 
   function runTimerInterval () {
-    setInterval(() => {
-      if (currentSettings.time.minutes <= 0 && currentSettings.time.seconds <= 0) {
-        resetTimer()
-      }
-
-      if (!currentSettings.isPlaying) return false
-
-      currentSettings.time.seconds -= 1
-
-      if (currentSettings.time.seconds < 0) {
-        currentSettings.time.seconds = 59
-        currentSettings.time.minutes -= 1
-      }
-
-      updateDisplayTimer()
-    }, 1000)
+    interval()
   }
 
   function updateDisplayTimer () {
@@ -87,7 +105,7 @@ function WorkApp () {
     const circlePercentage = percentageContainer.querySelector('svg circle')
     const fullCircleLength = circlePercentage.getAttribute('stroke-dasharray')
 
-    const percentage = Number(fullCircleLength) * timeToSeconds(currentSettings.time) / timeToSeconds({ ...defaultSettings.time })
+    const percentage = Number(fullCircleLength) * timeToSeconds(currentSettings.time) / timeToSeconds({ ...defaultSettings[activeTab].time })
     circlePercentage.setAttribute('stroke-dashoffset', percentage)
   }
 
@@ -112,6 +130,31 @@ function WorkApp () {
     })
   }
 
+  function clearAllTabs () {
+    for (const index in DOM.tabs) {
+      const tab = DOM.tabs[index]
+      tab.classList.remove('active')
+    }
+  }
+
+  function handleClickTabs () {
+    for (const index in DOM.tabs) {
+      const tab = DOM.tabs[index]
+      tab.addEventListener('click', () => {
+        activeTab = `${index}`
+        clearAllTabs()
+        updateByActiveTab()
+        tab.classList.add('active')
+      })
+    }
+  }
+
+  function updateByActiveTab () {
+    currentSettings = { ...defaultSettings[activeTab] }
+    resetTimer()
+    updateDisplayTimer()
+  }
+
   function init () {
     resetTimer()
     updateDisplayTimer()
@@ -119,6 +162,7 @@ function WorkApp () {
     handlePlayTimer()
     handlePauseTimer()
     handleStopTimer()
+    handleClickTabs()
   }
 
   return {
@@ -127,8 +171,6 @@ function WorkApp () {
 }
 
 window.addEventListener('load', () => {
-  feather.replace()
-
-  const workApp = WorkApp()
+  const workApp = TimerApp()
   workApp.init()
 })

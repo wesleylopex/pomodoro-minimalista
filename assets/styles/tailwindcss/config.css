@@ -1,3 +1,8 @@
 @tailwind base;
+
+#tabs-container button.active {
+  @apply border-b border-primary text-primary;
+}
+
 @tailwind components;
 @tailwind utilities;

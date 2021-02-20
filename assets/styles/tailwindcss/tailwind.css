@@ -551,6 +551,14 @@ video {
   height: auto;
 }
 
+#tabs-container button.active {
+  --tw-border-opacity: 1;
+  border-color: rgba(16, 131, 208, var(--tw-border-opacity));
+  border-bottom-width: 1px;
+  --tw-text-opacity: 1;
+  color: rgba(16, 131, 208, var(--tw-text-opacity));
+}
+
 .container {
   width: 100%;
 }

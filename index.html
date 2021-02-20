@@ -19,11 +19,11 @@
 <body class="bg-dark text-light">
   <main class="h-screen flex flex-col justify-center items-center container mx-auto">
     <div>
-      <div class="flex justify-center">
-        <button class="font-semibold text-lg focus:outline-none mx-4 text-primary">Trabalho</button>
-        <button class="font-medium text-lg focus:outline-none mx-4">Descanso</button>
+      <div id="tabs-container" class="flex justify-center">
+        <button id="work-tab" class="active font-medium text-lg focus:outline-none mx-4">Trabalho</button>
+        <button id="break-tab" class="font-medium text-lg focus:outline-none mx-4">Descanso</button>
       </div>
-      <div id="percentage-container" class="relative w-60 h-60">
+      <div id="percentage-container" class="my-20 relative w-60 h-60">
         <svg class="w-60 h-60">
           <circle class="w-60 h-60" stroke-dasharray="760" stroke-dashoffset="760" fill="none" cx="120" cy="120" r="118"></circle>
         </svg>
@@ -31,10 +31,7 @@
           <span id="timer-display" class="font-medium text-5xl">00:00</span>
         </div>
       </div>
-      <!-- <div class="mt-20 w-60 h-60 flex justify-center items-center border-4 border-primary rounded-full">
-        <span id="timer-display" class="font-medium text-5xl">00:00</span>
-      </div> -->
-      <div class="flex items-center justify-center mt-20">
+      <div class="flex items-center justify-center">
         <button id="stop-button" class="mx-2 bg-primary flex justify-center items-center p-3 rounded-full focus:outline-none">
           <i data-feather="square"></i>
         </button>
@@ -49,6 +46,7 @@
   </main>
 
   <script src="assets/scripts/feather-icons/feather.min.js"></script>
-  <script src="assets/scripts/index.js"></script>
+  <script src="assets/scripts/feather-icons/init.js"></script>
+  <script src="assets/scripts/timer.js"></script>
 </body>
 </html>
