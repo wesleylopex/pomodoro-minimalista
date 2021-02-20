@@ -94,6 +94,7 @@ const vue = new Vue({
           if (timer.minutes < 0) {
             this.stop()
             this.toggleActiveTimer()
+            this.notify()
           }
         })
       }
@@ -118,6 +119,23 @@ const vue = new Vue({
     },
     timeToSeconds (time) {
       return (Number(time.minutes) * 60) + Number(time.seconds)
+    },
+    notify () {
+      if (!('Notification' in window)) {
+        return false
+      }
+
+      const notificationMessage = this.activeTimer === 'work' ? 'Hora de voltar ao trabalho' : 'Tempo para descansar'
+
+      if (Notification.permission === 'granted') {
+        const notification = new Notification(notificationMessage)
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(function (permission) {
+          if (permission === 'granted') {
+            const notification = new Notification(notificationMessage)
+          }
+        })
+      }
     }
   },
   computed: {
