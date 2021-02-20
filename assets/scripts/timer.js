@@ -34,6 +34,8 @@ function TimerApp () {
   const interval = () => setInterval(() => {
     if (currentSettings.time.minutes <= 0 && currentSettings.time.seconds <= 0) {
       resetTimer()
+      activeTab = activeTab === 'work' ? 'break' : 'work'
+      updateByActiveTab()
     }
 
     if (!currentSettings.isPlaying) return false
@@ -149,10 +151,17 @@ function TimerApp () {
     }
   }
 
+  function setActiveTab () {
+    clearAllTabs()
+    const tab = DOM.tabs[activeTab]
+    tab.classList.add('active')
+  }
+
   function updateByActiveTab () {
     currentSettings = { ...defaultSettings[activeTab] }
     resetTimer()
     updateDisplayTimer()
+    setActiveTab()
   }
 
   function init () {
