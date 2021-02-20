@@ -144,17 +144,21 @@
     const vue = new Vue({
       el: '#app',
       data: {
-        tasks: [
+        tasks: [],
+        allowedTimers: [
           {
-            title: 'Fazer o timer do Pomodoro Design',
-            isDone: true
+            slug: 'work',
+            title: 'Trabalho',
+            minutes: 25,
+            seconds: 0
           },
           {
-            title: 'Fazer o logo do Pomodoro Design',
-            isDone: false
+            slug: 'break',
+            title: 'Descanso',
+            minutes: 5,
+            seconds: 0
           }
         ],
-        allowedTimers: [],
         activeTimer: 'work',
         timer: {
           work: {
