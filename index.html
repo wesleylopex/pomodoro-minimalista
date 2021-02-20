@@ -1,11 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pomodoro Timer Online - Timer Pomodoro Minimalista</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pomodoro Timer Online - Técnica / Método Pomodoro - Pomodoro Minimalista</title>
+  <meta name="author" content="@pontoagencia" />
+  <meta name="title" content="Pomodoro Timer Online - Técnica / Método Pomodoro - Pomodoro Minimalista">
+  <meta name="keywords" content="técnica pomodoro, método pomodoro, pomodoro timer, pomodoro online, pomodoro minimalista" />
+  <meta name="description" content="O timer online Pomodoro Minimalista, com a ajuda você a manter o foco no trabalho e tarefas por meio da técnica / método Pomodoro.">
+
+  <!-- <base href="https://pomodorominimalista.com.br"> -->
+  <link rel="canonical" href="https://pomodorominimalista.com.br">
   
-  <meta name="description" content="O Timer Pomodoro Minimalista ajuda você a manter o foco no trabalho por meio da técnica Pomodoro.">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Pomodoro Minimalista">
+  <meta name="apple-mobile-web-app-title" content="Pomodoro Minimalista">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#202124">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pomodorominimalista.com.br">
+  <meta property="og:title" content="Pomodoro Minimalista">
+  <meta property="og:description" content="O timer online Pomodoro Minimalista ajuda você a manter o foco no trabalho e tarefas por meio da técnica Pomodoro.">
+  <meta property="og:image" content="assets/images/metatags-pomodoro-minimalista.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://pomodorominimalista.com.br">
+  <meta property="twitter:title" content="Pomodoro Minimalista">
+  <meta property="twitter:description" content="O timer online Pomodoro Minimalista ajuda você a manter o foco no trabalho e tarefas por meio da técnica Pomodoro.">
+  <meta property="twitter:image" content="assets/images/metatags-pomodoro-minimalista.png">
+
+  <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="assets/images/favicon.ico" />
+  <link rel="apple-touch-icon" href="assets/images/favicon.ico" sizes="72x72" />
+  <link rel="apple-touch-icon" href="assets/images/favicon.ico" sizes="114x114" />
 
   <!-- Google fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -15,6 +47,16 @@
   <link rel="stylesheet" href="assets/styles/styles.css">
   <link rel="stylesheet" href="assets/styles/tailwindcss/tailwind.css">
 
+  <!-- Google Analytics -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XGB8WN68E4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XGB8WN68E4');
+  </script>
 </head>
 <body class="bg-dark text-light">
   <div id="app">
@@ -129,12 +171,17 @@
   <footer class="py-12">
     <div class="wrapper">
       <div class="flex items-center justify-center">
-        <a href="https://www.pontoagencia.com.br" target="_blank">
-          <div class="flex items-center justify-center">
-            <h3 class="paragraph">Desenvolvido por</h3>
-            <img class="w-12 ml-2" src="assets/images/logo-agencia-ponto-branco.png" alt="Agência Ponto" tile="Agência Ponto">
+        <div>
+          <div class="grid place-items-center mb-10">
+            <img class="w-64" src="assets/images/logo-pomodoro-minimalista-branco.png" alt="Pomodoro Minimalista" title="Pomodoro Minimalista">
           </div>
-        </a>
+          <a href="https://www.pontoagencia.com.br" target="_blank">
+            <div class="flex items-center justify-center">
+              <h3 class="paragraph">Desenvolvido por</h3>
+              <img class="w-12 ml-2" src="assets/images/logo-agencia-ponto-branco.png" alt="Agência Ponto" tile="Agência Ponto">
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </footer>
@@ -236,6 +283,11 @@
                 timer.seconds = 59
                 timer.minutes -= 1
               }
+
+              if (timer.minutes < 0) {
+                this.stop()
+                this.toggleActiveTimer()
+              }
             })
           }
         },
@@ -253,6 +305,9 @@
           this.timer[this.activeTimer].isPlaying = false,
           this.timer[this.activeTimer].minutes = timer.minutes
           this.timer[this.activeTimer].seconds = timer.seconds
+        },
+        toggleActiveTimer () {
+          this.activeTimer = this.activeTimer === 'work' ? 'break' : 'work'
         },
         timeToSeconds (time) {
           return (Number(time.minutes) * 60) + Number(time.seconds)
