@@ -63,8 +63,7 @@
         <div class="flex items-center justify-between">
           <h1 class="title">Tarefas</h1>
           <button @click="createTask" class="mx-2 bg-primary flex justify-center items-center p-1 rounded-sm focus:outline-none text-xs uppercase">
-            <i class="w-6 h-6 mr-2" data-feather="plus"></i>
-            Adicionar tarefa
+            <i class="w-6 h-6" data-feather="plus"></i>
           </button>
         </div>
         <div class="mt-10 grid grid-cols-1 gap-5">
@@ -72,7 +71,7 @@
             <div class="task__checkbox" @click="task.isDone = !task.isDone">
               <i class="task__icon" data-feather="check"></i>
             </div>
-            <input type="text" class="ml-4 task__input" :ref="`index-${index}`" v-model="task.title" @keyup.enter="createTask" @keyup.delete="deleteTaskIfEmpty(index)">
+            <input type="text" class="ml-4 task__input" :ref="`index-${index}`" v-model="task.title" @keyup.enter="createTask" @keydown.delete="deleteTaskIfEmpty(index)">
           </div>
         </div>
       </div>
@@ -98,28 +97,32 @@
   <section class="py-12 md:py-20">
     <div class="wrapper">
       <h2 class="title">Como funciona o Timer Pomodoro Minimalista?</h2>
-      <div class="mt-6">
-        <div class="mb-10 flex items-center">
-          <i class="mr-4" data-feather="clock"></i>
-          Inicie o Timer com 25 minutos
-        </div>
-        <div class="pl-10 mb-10 flex items-center">
-          <i class="mr-4" data-feather="briefcase"></i>
-          Comece seu <span class="text-primary ml-1">trabalho</span>
-        </div>
-        <div class="pl-10 mb-10 flex items-center">
-          <i class="mr-4" data-feather="book"></i>
-          Inicie seus <span class="text-primary ml-1">estudos</span>
-        </div>
-        <div class="mb-10 flex items-center">
-          <i class="mr-4" data-feather="bell"></i>
-          Após o final do tempo, descanse por 5 minutos
-        </div>
-        <div class="mb-10 flex items-center">
-          <i class="mr-4" data-feather="clock"></i>
-          Inicie o Timer novamente
-        </div>
-      </div>
+      <ul class="mt-6">
+        <li class="mb-10 flex items-center">
+          <i class="mr-4 w-6 h-6" data-feather="check-square"></i>
+          Organize as <span class="text-primary mx-1">tarefas</span> que você precisa terminar
+        </li>
+        <li class="mb-10 flex items-center">
+          <i class="mr-4 w-6 h-6" data-feather="clock"></i>
+          Inicie o timer com 25 minutos
+        </li>
+        <li class="pl-10 mb-10 flex items-center">
+          <i class="mr-4 w-6 h-6" data-feather="briefcase"></i>
+          Comece seu <span class="text-primary mx-1">trabalho</span>
+        </li>
+        <li class="pl-10 mb-10 flex items-center">
+          <i class="mr-4 w-6 h-6" data-feather="book"></i>
+          Inicie seus <span class="text-primary mx-1">estudos</span>
+        </li>
+        <li class="mb-10 flex items-center">
+          <i class="mr-4 w-6 h-6" data-feather="bell"></i>
+          Após o final do tempo, <span class="text-primary mx-1">descanse</span> por 5 minutos
+        </li>
+        <li class="mb-10 flex items-center">
+          <i class="mr-4 w-6 h-6" data-feather="clock"></i>
+          Inicie o timer novamente
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -200,6 +203,8 @@
           this.tasks.splice(index, 1)
         },
         setFocusOnLastTask () {
+          if (!this.tasks.length) return
+
           const ref = this.tasks.length - 1
 
           this.$nextTick(() => {
