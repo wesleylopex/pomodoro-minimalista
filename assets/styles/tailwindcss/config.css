@@ -47,7 +47,11 @@
 }
 
 .task__input {
-  @apply bg-transparent border-none outline-none w-full;
+  @apply bg-transparent border-none outline-none w-full transition-all duration-300;
+}
+
+.task.task--checked .task__input {
+  @apply line-through text-gray-500;
 }
 
 @tailwind components;

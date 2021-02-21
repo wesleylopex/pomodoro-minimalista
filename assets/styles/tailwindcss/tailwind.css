@@ -652,6 +652,16 @@ video {
   outline: 2px solid transparent;
   outline-offset: 2px;
   width: 100%;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-duration: 300ms;
+}
+
+.task.task--checked .task__input {
+  --tw-text-opacity: 1;
+  color: rgba(107, 114, 128, var(--tw-text-opacity));
+  text-decoration: line-through;
 }
 
 .container {
