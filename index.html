@@ -12,6 +12,7 @@
   <!-- <base href="https://pomodorominimalista.com.br"> -->
   <link rel="canonical" href="https://pomodorominimalista.com.br">
   
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="mobile-web-app-capable" content="yes">
@@ -103,7 +104,7 @@
     <section class="py-12 md:-py-20">
       <div class="wrapper">
         <div class="flex items-center justify-between">
-          <h1 class="title">Tarefas</h1>
+          <span class="title">Tarefas</span>
           <button @click="createTask" class="mx-2 bg-primary flex justify-center items-center p-1 rounded-sm focus:outline-none text-xs uppercase">
             <i class="w-6 h-6" data-feather="plus"></i>
           </button>
@@ -120,9 +121,9 @@
     </section>
   </div>
 
-  <section class="py-12 md:py-20">
+  <section class="mt-32 py-12 md:py-20">
     <div class="wrapper">
-      <h1 class="title">Timer Pomodoro minimalista online para melhorar a sua produtividade e foco</h1>
+      <h1 class="title">Timer Pomodoro Minimalista online para melhorar a sua produtividade e foco</h1>
       <p class="mt-6 paragraph">
         Desenvolvemos um timer Pomodoro Minimalista, pensando no seu foco e na produtividade. Com um design simples e cores agradáveis aos olhos, o Pomodoro Minimalista pode te ajudar a finalmente completar aquelas tarefas que estavam praticamente esquecidas.
       </p>
@@ -140,7 +141,7 @@
   
   <section class="py-12 md:py-20">
     <div class="wrapper">
-      <h2 class="title">Como funciona o Timer Pomodoro Minimalista?</h2>
+      <h2 class="title">Como funciona o timer Pomodoro Minimalista?</h2>
       <ul class="mt-6">
         <li class="mb-10 flex items-center">
           <i class="mr-4 w-6 h-6" data-feather="check-square"></i>
@@ -172,16 +173,27 @@
 
   <section class="py-12 md:py-20">
     <div class="wrapper">
-      <h2 class="title">Está gostando de usar o Pomodoro Minimalista? Se puder, ajude a gente a manter este projeto</h2>
-      <p class="my-6 paragraph">
-        Temos um perfil no <a class="text-primary" href="https://patreon.com/pomodorominimalista" target="_blank">Patreon</a>. Lá você pode fazer uma doação de um valor de sua escolha.
-        Não esqueça que os valores do Patreon são em dólares. Ajude apenas se puder.
-      </p>
-      <a href="https://patreon.com/pomodorominimalista" target="_blank">
-        <button class="text-sm transition-colors hover:bg-opacity-80 bg-primary duration-300 font-medium focus:outline-none p-3 px-6 rounded-full">
-          Quero ajudar
-        </button>
-      </a>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div>
+          <h2 class="title">Nos ajude a manter este projeto</h2>
+          <p class="my-6 paragraph">
+            Temos um perfil no <a class="text-primary" href="https://picpay.me/pomodorominimalista" target="_blank">PicPay</a>. Lá você pode fazer uma doação de um valor de sua escolha.
+            O Pomodoro Minimalista é totalmente gratuito. Ajude apenas se puder.
+          </p>
+          <a href="https://picpay.me/pomodorominimalista" target="_blank">
+            <button class="text-sm transition-colors hover:bg-opacity-80 bg-primary duration-300 font-medium focus:outline-none p-3 px-6 rounded-full">
+              Quero ajudar
+            </button>
+          </a>
+        </div>
+        <div>
+          <a href="https://picpay.me/pomodorominimalista" target="_blank">
+            <figure>
+              <img src="assets/images/qr-code-picpay-pomodoro-minimalista.jpeg" alt="QR Code PicPay Pomodoro Minimalista" title="QR Code PicPay Pomodoro Minimalista">
+            </figure>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -189,15 +201,15 @@
     <div class="wrapper">
       <div class="flex items-center justify-center">
         <div>
-          <div class="grid place-items-center mb-10">
+          <div class="grid place-items-center">
             <img class="w-40 md:w-48" src="assets/images/logo-pomodoro-minimalista-branco.png" alt="Pomodoro Minimalista" title="Pomodoro Minimalista">
           </div>
-          <a href="https://www.pontoagencia.com.br" target="_blank">
-            <div class="flex items-center justify-center">
+          <!-- <a href="https://www.pontoagencia.com.br" target="_blank">
+            <div class="mt-10 flex items-center justify-center">
               <h3 class="paragraph">Desenvolvido por</h3>
               <img class="w-12 ml-2" src="assets/images/logo-agencia-ponto-branco.png" alt="Agência Ponto" tile="Agência Ponto">
             </div>
-          </a>
+          </a> -->
         </div>
       </div>
     </div>
@@ -213,7 +225,7 @@
   <script src="assets/scripts/feather-icons/init.js"></script>
   <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-  <script src="assets/scripts/App.js"></script>
+  <script src="assets/scripts/App.js?version=1"></script>
 
   <script>
     function hideLoader () {
