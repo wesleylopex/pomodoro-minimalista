@@ -26,7 +26,7 @@ const vue = new Vue({
       },
       break: {
         isPlaying: false,
-        minutes: 25,
+        minutes: 5,
         seconds: 0,
         interval: (callback) => setInterval(callback, 1000)
       }
