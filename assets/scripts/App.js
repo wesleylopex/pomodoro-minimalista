@@ -26,13 +26,13 @@ const vue = new Vue({
       },
       break: {
         isPlaying: false,
-        minutes: 5,
+        minutes: 25,
         seconds: 0,
         interval: (callback) => setInterval(callback, 1000)
       }
     },
     circle: {
-      strokeDashArray: 760
+      strokeDashArray: 741
     },
     defaultPageTitle: 'Pomodoro Timer Online - Técnica / Método Pomodoro - Pomodoro Minimalista'
   },
