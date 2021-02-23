@@ -81,10 +81,12 @@ const vue = new Vue({
     deleteTask (index) {
       this.tasks.splice(index, 1)
     },
-    setFocusOnTask (index) {
+    setFocusOnTask (index, event = null) {
       const task = this.tasks[index]
 
       if (!this.tasks.length || !task) return
+
+      if (event) event.preventDefault()
 
       this.$nextTick(() => {
         const [input] = this.$refs[`index-${index}`]
