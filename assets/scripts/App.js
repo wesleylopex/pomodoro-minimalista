@@ -67,29 +67,27 @@ const vue = new Vue({
     },
     createTask () {
       this.tasks.push({ title: '', isDone: false })
-      this.setFocusOnLastTask()
+      this.setFocusOnTask(this.tasks.length - 1)
     },
     deleteTaskIfEmpty (index, event) {
       const task = this.tasks[index]
 
-      if (!task) return
+      if (!task || task.title || !event) return
 
-      if (!task.title) {
-        if (event) event.preventDefault()
-        this.deleteTask(index)
-        this.setFocusOnLastTask()
-      }
+      event.preventDefault()
+      this.deleteTask(index)
+      this.setFocusOnTask(index - 1)
     },
     deleteTask (index) {
       this.tasks.splice(index, 1)
     },
-    setFocusOnLastTask () {
-      if (!this.tasks.length) return
+    setFocusOnTask (index) {
+      const task = this.tasks[index]
 
-      const ref = this.tasks.length - 1
+      if (!this.tasks.length || !task) return
 
       this.$nextTick(() => {
-        const [input] = this.$refs[`index-${ref}`]
+        const [input] = this.$refs[`index-${index}`]
         input.focus()
       })
     },
